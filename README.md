@@ -2,6 +2,13 @@
 
 Part of the Philharmonic workspace: https://github.com/metastable-void/philharmonic-workspace
 
+`philharmonic-connector-impl-llm-openai-compat` implements the
+`llm_generate` connector capability for OpenAI-compatible
+`/chat/completions` APIs. It supports three translation dialects —
+`openai_native`, `vllm_native`, and `tool_call_fallback` — while
+normalizing responses into `{output, stop_reason, usage}` and enforcing
+`output_schema` validation before returning results.
+
 ## Contributing
 
 This crate is developed as a submodule of the Philharmonic

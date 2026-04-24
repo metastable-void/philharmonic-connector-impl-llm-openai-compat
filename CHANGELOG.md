@@ -9,10 +9,10 @@ this crate adheres to
 
 ## [Unreleased]
 
-Implementation pending. See the
-[Philharmonic workspace ROADMAP](https://github.com/metastable-void/philharmonic-workspace/blob/main/ROADMAP.md)
-for the phase that populates this crate.
+## [0.1.0] - 2026-04-24
 
-## [0.0.0]
-
-Name reservation on crates.io. No functional content yet.
+Initial release of `llm_openai_compat` with OpenAI-compatible
+`/chat/completions` support across `openai_native`, `vllm_native`, and
+`tool_call_fallback` dialects, including schema validation,
+stop-reason/usage normalization, and wiremock-backed request-vector and
+error-path tests.

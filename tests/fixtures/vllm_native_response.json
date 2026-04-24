@@ -1,0 +1,21 @@
+{
+  "id": "chatcmpl-vllm-synth-0001",
+  "object": "chat.completion",
+  "created": 1777022000,
+  "model": "HuggingFaceH4/zephyr-7b-beta",
+  "choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "{\"name\":\"Jane Doe\",\"age\":29,\"skills\":[\"Rust\",\"Systems\"],\"grade\":\"B\",\"email\":\"jane.doe@example.com\",\"work_history\":[{\"company\":\"Tech Solutions Inc.\",\"duration\":3,\"position\":\"Engineer\"}]}"
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 120,
+    "completion_tokens": 80,
+    "total_tokens": 200
+  }
+}

@@ -1,7 +1,7 @@
 # Test Fixture Provenance
 
 This directory is a synchronized fixture copy of
-`<workspace-root>/docs/upstream-fixtures/`, with one synthesized file for
+`<workspace-root>/tests/fixtures/upstream/`, with one synthesized file for
 vLLM response coverage.
 
 The copied files are committed in this crate so standalone impl-repo CI and
@@ -14,14 +14,14 @@ boundary.
   - Byte-exact copies from workspace provenance fixtures.
   - Upstream source commit: vLLM
     `cf8a613a87264183058801309868722f9013e101`.
-  - See `<workspace-root>/docs/upstream-fixtures/vllm/README.md` for pinned
+  - See `<workspace-root>/tests/fixtures/upstream/vllm/README.md` for pinned
     blob SHAs and recapture context.
 
 - `openai-chat/`
   - Byte-exact copies from workspace provenance fixtures.
   - Captured on 2026-04-24 against real OpenAI API model
     `gpt-4o-mini-2024-07-18`.
-  - See `<workspace-root>/docs/upstream-fixtures/openai-chat/README.md` for
+  - See `<workspace-root>/tests/fixtures/upstream/openai-chat/README.md` for
     capture commands and recapture steps.
 
 - `vllm_native_response.json`
@@ -31,6 +31,6 @@ boundary.
 
 ## Sync discipline
 
-When provenance fixtures under `<workspace-root>/docs/upstream-fixtures/`
+When provenance fixtures under `<workspace-root>/tests/fixtures/upstream/`
 change, update the copied files here as byte-exact duplicates so request-vector
 and smoke tests keep validating against the same authoritative source material.

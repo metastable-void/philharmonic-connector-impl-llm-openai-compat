@@ -9,6 +9,13 @@ use philharmonic_connector_impl_api::ImplementationError;
 pub(crate) type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Debug, thiserror::Error, Clone, PartialEq, Eq)]
+#[error("custom header {name:?} is invalid: {reason}")]
+pub(crate) struct CustomHeaderError {
+    pub(crate) name: String,
+    pub(crate) reason: String,
+}
+
+#[derive(Debug, thiserror::Error, Clone, PartialEq, Eq)]
 pub(crate) enum Error {
     #[error("{0}")]
     InvalidConfig(String),
@@ -35,8 +42,21 @@ pub(crate) enum Error {
     #[error("{0}")]
     MalformedProviderPayload(String),
 
+    /// A custom header is reserved or malformed.
+    #[error("custom header {name:?} is invalid: {reason}")]
+    InvalidCustomHeader { name: String, reason: String },
+
     #[error("{0}")]
     Internal(String),
+}
+
+impl From<CustomHeaderError> for Error {
+    fn from(value: CustomHeaderError) -> Self {
+        Self::InvalidCustomHeader {
+            name: value.name,
+            reason: value.reason,
+        }
+    }
 }
 
 impl From<Error> for ImplementationError {
@@ -57,6 +77,9 @@ impl From<Error> for ImplementationError {
             Error::MalformedProviderPayload(detail) | Error::Internal(detail) => {
                 ImplementationError::Internal { detail }
             }
+            Error::InvalidCustomHeader { name, reason } => ImplementationError::InvalidConfig {
+                detail: format!("custom header {name:?} is invalid: {reason}"),
+            },
         }
     }
 }
@@ -121,6 +144,18 @@ mod tests {
             malformed,
             ImplementationError::Internal {
                 detail: "bad payload".to_owned(),
+            }
+        );
+
+        let custom_header = ImplementationError::from(Error::InvalidCustomHeader {
+            name: "X Bad".to_owned(),
+            reason: "name has invalid token character".to_owned(),
+        });
+        assert_eq!(
+            custom_header,
+            ImplementationError::InvalidConfig {
+                detail: "custom header \"X Bad\" is invalid: name has invalid token character"
+                    .to_owned(),
             }
         );
 

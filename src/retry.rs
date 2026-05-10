@@ -49,6 +49,7 @@ pub(crate) fn should_retry(err: &Error) -> bool {
         | Error::InvalidRequest(_)
         | Error::SchemaValidationFailed(_)
         | Error::MalformedProviderPayload(_)
+        | Error::InvalidCustomHeader { .. }
         | Error::Internal(_) => false,
     }
 }

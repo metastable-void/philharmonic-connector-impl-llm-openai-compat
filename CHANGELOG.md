@@ -9,6 +9,13 @@ this crate adheres to
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-05-10
+
+Added a `custom_headers` runtime endpoint config field for
+provider-specific upstream HTTP headers. Custom headers now validate at
+deserialize time, including reserved-header rejection and CR/LF/control
+character guards for header values.
+
 ## [0.1.0] - 2026-04-24
 
 Initial release of `llm_openai_compat` with OpenAI-compatible

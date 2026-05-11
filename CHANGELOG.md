@@ -9,6 +9,12 @@ this crate adheres to
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-05-11
+
+Added a `tool_call_fallback_auto` dialect for providers that reject
+forced tool selection but accept `tool_choice: "auto"` with the existing
+single `emit_output` tool-call fallback shape.
+
 ## [0.1.1] - 2026-05-10
 
 Added a `custom_headers` runtime endpoint config field for

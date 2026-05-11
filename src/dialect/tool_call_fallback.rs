@@ -12,6 +12,21 @@ use serde_json::{Map, Value as JsonValue, json};
 const TOOL_NAME: &str = "emit_output";
 
 pub(crate) fn translate_request(request: &LlmGenerateRequest) -> JsonValue {
+    translate_request_with_tool_choice(
+        request,
+        json!({
+            "type": "function",
+            "function": {
+                "name": TOOL_NAME,
+            }
+        }),
+    )
+}
+
+pub(crate) fn translate_request_with_tool_choice(
+    request: &LlmGenerateRequest,
+    tool_choice: JsonValue,
+) -> JsonValue {
     let mut body = Map::new();
     body.insert("model".to_owned(), json!(request.model));
     body.insert("messages".to_owned(), json!(request.messages));
@@ -29,15 +44,7 @@ pub(crate) fn translate_request(request: &LlmGenerateRequest) -> JsonValue {
             }
         ]),
     );
-    body.insert(
-        "tool_choice".to_owned(),
-        json!({
-            "type": "function",
-            "function": {
-                "name": TOOL_NAME,
-            }
-        }),
-    );
+    body.insert("tool_choice".to_owned(), tool_choice);
 
     if let Some(value) = request.max_output_tokens {
         body.insert("max_completion_tokens".to_owned(), json!(value));

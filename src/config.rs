@@ -162,6 +162,8 @@ pub enum Dialect {
     VllmNative,
     /// OpenAI tool-call fallback that carries output via function args.
     ToolCallFallback,
+    /// OpenAI tool-call fallback using provider-selected tool choice.
+    ToolCallFallbackAuto,
 }
 
 #[cfg(test)]
@@ -213,11 +215,12 @@ mod tests {
     }
 
     #[test]
-    fn dialect_enum_roundtrips_all_three() {
+    fn dialect_enum_roundtrips_all_four() {
         let cases = [
             Dialect::OpenaiNative,
             Dialect::VllmNative,
             Dialect::ToolCallFallback,
+            Dialect::ToolCallFallbackAuto,
         ];
 
         for dialect in cases {

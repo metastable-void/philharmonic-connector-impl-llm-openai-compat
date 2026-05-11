@@ -2,6 +2,7 @@
 
 pub(crate) mod openai_native;
 pub(crate) mod tool_call_fallback;
+pub(crate) mod tool_call_fallback_auto;
 pub(crate) mod vllm_native;
 
 use crate::{
@@ -18,6 +19,7 @@ pub(crate) fn build_request_body(dialect: Dialect, request: &LlmGenerateRequest)
         Dialect::OpenaiNative => openai_native::translate_request(request),
         Dialect::VllmNative => vllm_native::translate_request(request),
         Dialect::ToolCallFallback => tool_call_fallback::translate_request(request),
+        Dialect::ToolCallFallbackAuto => tool_call_fallback_auto::translate_request(request),
     }
 }
 
@@ -30,6 +32,7 @@ pub(crate) fn extract_response(
         Dialect::OpenaiNative => openai_native::extract_response(&provider),
         Dialect::VllmNative => vllm_native::extract_response(&provider),
         Dialect::ToolCallFallback => tool_call_fallback::extract_response(&provider),
+        Dialect::ToolCallFallbackAuto => tool_call_fallback_auto::extract_response(&provider),
     }
 }
 

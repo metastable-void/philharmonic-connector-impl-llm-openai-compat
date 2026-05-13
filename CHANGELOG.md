@@ -9,6 +9,21 @@ this crate adheres to
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-05-13
+
+Changed (breaking): outbound HTTP is now driven by `mechanics-http-client`
+(hyper-rustls + webpki-roots + aws-lc-rs) instead of `reqwest`.
+
+- `LlmOpenaiCompat::with_client(reqwest::Client)` →
+  `LlmOpenaiCompat::with_client(mechanics_http_client::Client)`.
+- Removed: the `reqwest` dependency.
+- Disabled `jsonschema`'s default features (we don't use its
+  `resolve-http` path, which pulled `reqwest` transitively).
+- Trust posture: TLS root store is the bundled Mozilla CA bundle
+  (`webpki-roots`) only — no OS-native trust, no
+  `rustls-platform-verifier`. Crypto provider is `aws-lc-rs`;
+  `ring` is no longer in the dep graph.
+
 ## [0.1.2] - 2026-05-11
 
 Added a `tool_call_fallback_auto` dialect for providers that reject

@@ -9,6 +9,18 @@ this crate adheres to
 
 ## [Unreleased]
 
+### Fixed
+- `build_client` now constructs its mhc `Client` with
+  `pool_max_idle_per_host(0)`, disabling idle TCP / H2 / H3
+  connection reuse for the upstream provider hop. In bursty
+  support-chat workflows the second-or-later LLM request can
+  otherwise reuse a stale keep-alive that the provider has
+  closed on its side, surfacing as `Error::Cancelled` from
+  mhc and re-raised as ``Error: endpoint `llm` request
+  failed: request cancelled: ...`` in the JS realm.
+  Reconnect cost per request is small compared to the harm
+  of mid-conversation transport failure.
+
 ## [0.2.1] - 2026-05-14
 
 ### Changed

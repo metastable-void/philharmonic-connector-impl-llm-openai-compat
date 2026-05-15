@@ -12,7 +12,10 @@ use serde_json::Value as JsonValue;
 use std::time::Duration;
 
 pub(crate) fn build_client() -> Result<Client> {
-    Client::new().map_err(|e| Error::Internal(format!("failed to build HTTP client: {e}")))
+    Client::builder()
+        .pool_max_idle_per_host(0)
+        .build()
+        .map_err(|e| Error::Internal(format!("failed to build HTTP client: {e}")))
 }
 
 pub(crate) async fn execute_one_attempt(
